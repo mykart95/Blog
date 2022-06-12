@@ -1,18 +1,20 @@
 <html lang="en">
-    <%- include('./partials/head.ejs') %>
+    <%- include('../partials/head.ejs') %>
 
 <body>
    
-    <%- include('./partials/nav.ejs') %>
+    <%- include('../partials/nav.ejs') %>
     
     <div class="details content">
        <h3><%= blog.title %></h3>
        <div class="content">
            <p><%= blog.body %></p>
        </div>
-       <a data-doc="<%= blog._id%>" class="delete">delete</a>
+       <a data-doc="<%= blog._id%>" class="delete">
+        <img src="/trashcan.svg" alt="delete icon">
+       </a>
     </div>
-    <%- include('./partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
     <script>
         const trashcan= document.querySelector('a.delete');
         trashcan.addEventListener("click", (e)=>{
@@ -21,10 +23,10 @@
             fetch(endpoint, {
                 method: 'DELETE'
             }).then((response)=>{
-                response.json();
+                return response.json()
             }).then((data)=>{
                 console.log(data);
-                window.location.href= '/blogs'
+                window.location.href= data.redirect;
             })
             .catch(err=>console.log(err))
         });
